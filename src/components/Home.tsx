@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import { clans } from '../data/clans';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 const clansInfo = clans.items;
 
@@ -10,18 +11,26 @@ const columns = [
   {
     dataField: 'tag',
     text: 'Clan tag',
+    sort: true,
+    filter: textFilter(),
   },
   {
     dataField: 'name',
     text: 'Clan Name',
+    sort: true,
+    filter: textFilter(),
   },
   {
     dataField: 'type',
     text: 'Clan type',
+    sort: true,
+    filter: textFilter(),
   },
   {
     dataField: 'clanLevel',
     text: 'Clan level',
+    sort: true,
+    filter: textFilter(),
   },
 ];
 
@@ -35,13 +44,14 @@ export const Home = () => {
   }, []);
   return (
     <div>
-      <div className='table-responsive'>
+      <div className='container table-responsive'>
         <BootstrapTable
           bootstrap4
-          keyField='id'
+          keyField='tag'
           data={clansInfo}
           columns={columns}
           pagination={paginationFactory({ sizePerPage: 10, paginationSize: 1 })}
+          filter={filterFactory()}
         />
       </div>
     </div>

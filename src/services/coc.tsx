@@ -35,17 +35,10 @@ export default class ClashOfClans {
   }
 
   public async getClans(params: CoCAPIClansMethodParams): Promise<Clan[]> {
-    const url = `${COC_API_URL}${COC_API_METHODS.clans}`;
-    console.log(`${url}?name=aaa&limit=2`, url);
+    const url = `${COC_API_METHODS.clans}`;
     const dataApiResponse: CoCAPIClansMethodResponse = await (
-      await axios.get(`${url}?name=aaa&limit=2`, {
-        headers: {
-          Authorization: `Bearer ${COC_API_TOKEN}`,
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': 'true',
-          'Access-Control-Allow-Methods': '*',
-          'Access-Control-Allow-Headers': '*',
-        },
+      await this.httpClient.get(`${url}`, {
+        params,
       })
     )?.data;
     if (!dataApiResponse) return;
@@ -66,5 +59,20 @@ export default class ClashOfClans {
     this.responseClansMethod.params[pagingType] = pagingAux[pagingType];
     if (!this.responseClansMethod) return;
     return this.getClans(this.responseClansMethod.params);
+  }
+
+  public async getAllClans(params: CoCAPIClansMethodParams): Promise<Clan[]> {
+    const url = `${COC_API_METHODS.clans}`;
+    const dataApiResponse: CoCAPIClansMethodResponse = await (
+      await this.httpClient.get(`${url}`, {
+        params,
+      })
+    )?.data;
+    if (!dataApiResponse) return;
+    const clans = dataApiResponse.items;
+    params.after = dataApiResponse.paging.cursors.after;
+    params.before = dataApiResponse.paging.cursors.before;
+    this.responseClansMethod = { params, response: dataApiResponse };
+    return clans;
   }
 }
