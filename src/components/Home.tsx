@@ -4,13 +4,14 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import { clans } from '../data/clans';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import '../assets/css/home.css';
 
 const clansInfo = clans.items;
 
 const columns = [
   {
     dataField: 'tag',
-    text: 'Clan tag',
+    text: 'Clan Tag',
     sort: true,
     filter: textFilter(),
   },
@@ -22,13 +23,13 @@ const columns = [
   },
   {
     dataField: 'type',
-    text: 'Clan type',
+    text: 'Clan Type',
     sort: true,
     filter: textFilter(),
   },
   {
     dataField: 'clanLevel',
-    text: 'Clan level',
+    text: 'Clan Level',
     sort: true,
     filter: textFilter(),
   },
@@ -57,6 +58,7 @@ export const Home = () => {
     <div>
       <div className='container table-responsive'>
         <BootstrapTable
+          className='table'
           bootstrap4
           keyField='tag'
           data={clansInfo}

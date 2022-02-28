@@ -1,0 +1,12 @@
+.container-fluid {
+  background-color: #efe1c4;
+}
+
+.h1 {
+  background-color: #c22f43;
+  border-radius: 20rem;
+  padding: 0.5rem;
+}
+.subtitle {
+  color: #efe1c4;
+}
