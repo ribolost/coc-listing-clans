@@ -35,10 +35,21 @@ const columns = [
 ];
 
 export const Home = () => {
+  /**
+   * TODO: Complete this code
+   * Due to the CORS problem, the information could not be loaded from CoC API.
+   * When the CORS problem is fixed, load the first page of the table with the default filter setting
+   * the limit in 100 to load the first 100 clans.
+   * After, to filter and pagination, use the CoC services.
+   *
+   */
   useEffect(() => {
     async function fetchData() {
       const coc = new ClashOfClans();
       console.log(coc.getClans({ limit: 2, name: 'aaa' }));
+      console.log(coc.clansPagination('after'));
+      console.log(coc.clansPagination('before'));
+      console.log(coc.getAllClans());
     }
     fetchData();
   }, []);

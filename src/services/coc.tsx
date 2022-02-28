@@ -10,7 +10,6 @@ import {
   CoCParamsAPIClans as CoCAPIClansMethodParams,
   PagingType,
 } from '../interfaces/cocApi';
-// axios.defaults.baseURL = 'https://api.clashofclans.com/v1/';
 
 export default class ClashOfClans {
   private httpClient: AxiosInstance;

@@ -4,7 +4,13 @@ List the clans of Clash of Clans game with a brief graphic interface
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Node version:
-14.16.1
+
+16.40.0
+
+## To use
+
+Copy the token generated in [https://developer.clashofclans.com/#/account](https://developer.clashofclans.com/#/account) and paste in the constants file (COC_API_TOKEN).
+
 ## Available Scripts
 
 In the project directory, you can run:
