@@ -20,18 +20,18 @@ export default class ClashOfClans {
   };
 
   constructor() {
-    // const baseUrl = COC_API_URL;
-    // const requestTimeout = 10000;
-    // const apiKey = COC_API_TOKEN;
-    // this.httpClient = axios.create({
-    //   baseURL: baseUrl,
-    //   timeout: requestTimeout,
-    //   headers: {
-    //     Authorization: `Bearer ${apiKey}`,
-    //     Accept: 'application/json',
-    //     'Access-Control-Allow-Origin': '*',
-    //   },
-    // });
+    const baseUrl = COC_API_URL;
+    const requestTimeout = 300000;
+    const apiKey = COC_API_TOKEN;
+    this.httpClient = axios.create({
+      baseURL: baseUrl,
+      timeout: requestTimeout,
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        Accept: 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
   }
 
   public async getClans(params: CoCAPIClansMethodParams): Promise<Clan[]> {
@@ -61,18 +61,27 @@ export default class ClashOfClans {
     return this.getClans(this.responseClansMethod.params);
   }
 
-  public async getAllClans(params: CoCAPIClansMethodParams): Promise<Clan[]> {
+  public async getAllClans(): Promise<Clan[]> {
+    const params: CoCAPIClansMethodParams = {
+      minMembers: 2,
+      limit: 100,
+      after: null,
+    };
     const url = `${COC_API_METHODS.clans}`;
-    const dataApiResponse: CoCAPIClansMethodResponse = await (
-      await this.httpClient.get(`${url}`, {
-        params,
-      })
-    )?.data;
-    if (!dataApiResponse) return;
-    const clans = dataApiResponse.items;
-    params.after = dataApiResponse.paging.cursors.after;
-    params.before = dataApiResponse.paging.cursors.before;
-    this.responseClansMethod = { params, response: dataApiResponse };
-    return clans;
+    const searchClans = (pagingToken = undefined, clansAccumulated = []) =>
+      this.httpClient
+        .get(`${url}`, {
+          params,
+        })
+        .then((apiResponse) => apiResponse.data)
+        .then((clansResponse: CoCAPIClansMethodResponse) => {
+          const clans = clansAccumulated.concat(clansResponse.items);
+
+          return clansResponse.paging.cursors.after
+            ? searchClans(clansResponse.paging.cursors.after, clans)
+            : clans;
+        });
+
+    return searchClans();
   }
 }

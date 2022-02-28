@@ -1,12 +1,12 @@
 export interface CoCParamsAPIClans {
-  name: string;
+  name?: string;
   limit: number;
   warFrequency?: string;
-  locationId?: string;
-  minMembers?: string;
-  maxMembers?: string;
-  minClanPoints?: string;
-  minClanLevel?: string;
+  locationId?: number;
+  minMembers?: number;
+  maxMembers?: number;
+  minClanPoints?: number;
+  minClanLevel?: number;
   after?: string;
   before?: string;
 }

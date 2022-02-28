@@ -50,7 +50,7 @@ export const Home = () => {
           keyField='tag'
           data={clansInfo}
           columns={columns}
-          pagination={paginationFactory({ sizePerPage: 10, paginationSize: 1 })}
+          pagination={paginationFactory({ sizePerPage: 10, paginationSize: 5 })}
           filter={filterFactory()}
         />
       </div>
